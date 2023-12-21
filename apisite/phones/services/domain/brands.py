@@ -1,5 +1,3 @@
-from django.db import models
-
 from phones.models import brands
 from .base import BaseModelService
 

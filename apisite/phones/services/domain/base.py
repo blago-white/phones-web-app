@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractmethod
-from django.db import models
+
 from django.core.exceptions import ValidationError
+from django.db import models
 
 from common.models import utils
 
@@ -57,3 +58,22 @@ class BaseModelService(AbstractModelService, metaclass=ABCMeta):
 
     def delete(self, pk) -> None:
         self.get(pk=pk).delete()
+
+
+class CustomModelService(BaseModelService):
+    _model: models.Model = None
+
+    def __init__(self, model: models.Model):
+        self._model = model
+
+
+class ModelServiceFactory:
+    def __init__(self, model: models.Model):
+        if not models.Model.__subclasscheck__(model.__class__):
+            raise TypeError("Model arg must be a class derivated of django Model")
+
+        self._model = model
+
+    @property
+    def service(self):
+        return CustomModelService(model=self._model)

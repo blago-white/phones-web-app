@@ -1,25 +1,20 @@
 from django.db import models
 
 
-class _BasePhoneChoises(models.IntegerChoices):
-    _MAX_LENGTH: int
-
-    @property
-    def max_length(self):
-        return self._MAX_LENGTH
-
-
-class PhoneStorageChoises(_BasePhoneChoises):
-    STORAGE_SIZE_32 = 1, 32
-    STORAGE_SIZE_64 = 2, 64
-    STORAGE_SIZE_128 = 3, 128
-    STORAGE_SIZE_256 = 4, 256
-    STORAGE_SIZE_1024 = 5, 1024
-
-    _MAX_LENGTH = 1
+class PhoneStorageChoises(models.IntegerChoices):
+    STORAGE_SIZE_32 = 32
+    STORAGE_SIZE_64 = 64
+    STORAGE_SIZE_128 = 128
+    STORAGE_SIZE_256 = 256
+    STORAGE_SIZE_512 = 512
+    STORAGE_SIZE_1024 = 1024
 
 
-class PhoneColorsChoises(_BasePhoneChoises):
+class PhoneColorsChoises(models.TextChoices):
     COLOR_RED = "r", "Red"
+    COLOR_WHITE = "w", "White"
+    COLOR_BLACK = "b", "Black"
 
-    _MAX_LENGTH = 1
+
+def get_max_length(choises: models.enums.ChoicesType):
+    return len(max(choises.values, key=len))
