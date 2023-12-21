@@ -4,7 +4,10 @@ from . import brands, colors, storages, base
 
 
 class Phone(models.Model):
-    brand = models.ForeignKey(to=brands.Brand, on_delete=models.SET_NULL, null=True, blank=False)
+    brand = models.ForeignKey(to=brands.Brand,
+                              on_delete=models.SET_NULL,
+                              null=True,
+                              blank=False)
     title = models.CharField(max_length=100)
     colors = models.ManyToManyField(to=colors.PhoneColor,
                                     related_name="colors",

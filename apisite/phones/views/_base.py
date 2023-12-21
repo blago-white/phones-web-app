@@ -4,8 +4,7 @@ from rest_framework.viewsets import ModelViewSet
 from phones.mixins import base
 
 
-class DefaultModelViewSet(base.RetrieveAPIViewMixin,
-                          base.CreateAPIViewMixin,
+class DefaultModelViewSet(base.APIViewSetMixin,
                           ModelViewSet):
     def get_all(self, request: HttpRequest):
         return self.get_200_response(data=self._repository.get_all())

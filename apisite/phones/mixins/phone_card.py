@@ -1,15 +1,12 @@
-from phones import serializers, repositories
+from phones import serializers, repositories, config
 from . import base
 
 
 class PhoneCardAPIViewMixin(base.ModelAPIViewMixin):
     serializer_class = serializers.PhonePositionSerializer
-    _repository: repositories.PhonesCardRepository = (
-        repositories.PhonesCardRepository()
-    )
+    pk_url_kwarg = config.PHONE_PK_URL_FIELD
+    _repository = repositories.PhonesCardRepository()
 
 
-class BasePhoneCardViewSetMixin(PhoneCardAPIViewMixin,
-                                base.RetrieveAPIViewMixin,
-                                base.CreateAPIViewMixin,):
+class BasePhoneCardViewSetMixin(PhoneCardAPIViewMixin, base.APIViewSetMixin):
     pass

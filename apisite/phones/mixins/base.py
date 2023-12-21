@@ -5,7 +5,6 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 
-from phones import config
 from phones.repositories.base import BaseRepository
 
 
@@ -37,7 +36,7 @@ class POSTAPIViewMixin(BaseResponseAPIViewMixin):
 
 class RetrieveAPIViewMixin(ModelAPIViewMixin):
     def get_requested_pk(self) -> int:
-        return self.kwargs.get(config.PHONE_PK_URL_FIELD)
+        return self.kwargs.get(self.pk_url_kwarg)
 
 
 class CreateAPIViewMixin(ModelAPIViewMixin, POSTAPIViewMixin):
@@ -48,3 +47,7 @@ class CreateAPIViewMixin(ModelAPIViewMixin, POSTAPIViewMixin):
             data=data,
             status=status.HTTP_201_CREATED
         )
+
+
+class APIViewSetMixin(CreateAPIViewMixin, RetrieveAPIViewMixin):
+    pass

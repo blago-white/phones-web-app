@@ -18,3 +18,8 @@ class PhoneCardViewSet(mixins.BasePhoneCardViewSetMixin, _base.DefaultModelViewS
     def get_all(self, request: HttpRequest, **kwargs):
         cards = self._repository.get_all_for_pk(pk=self.get_requested_pk())
         return self.get_200_response(data=cards)
+
+
+class BrandViewSet(mixins.BaseBrandViewSetMixin, _base.DefaultModelViewSet):
+    lookup_url_kwarg = "title"
+    lookup_field = "title"

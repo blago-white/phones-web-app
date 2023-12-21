@@ -27,9 +27,11 @@ from phones.models import base, phone, storages, colors
 # for obj in phone:
 #     obj: colors.PhoneColor
 #     print(obj)
+#
+# with open("dump2.json", 'r') as f:
+#     contents = f.read()
+#
+# with open("dump.json", "w", encoding="utf-8") as f:
+#     f.write(contents)
 
-with open("dump2.json", 'r') as f:
-    contents = f.read()
-
-with open("dump.json", "w", encoding="utf-8") as f:
-    f.write(contents)
+# phone.Phone.objects.all().delete()

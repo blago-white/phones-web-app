@@ -6,6 +6,7 @@ from . import base
 
 class PhonesAPIViewMixin(base.ModelAPIViewMixin):
     serializer_class = serializers.PhoneSerializer
+    pk_url_kwarg = config.PHONE_PK_URL_FIELD
     _repository: repositories.PhonesRepository = repositories.PhonesRepository()
 
 

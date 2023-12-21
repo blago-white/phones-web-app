@@ -1,14 +1,13 @@
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
 
+from . import routers
 from .views import viewsets
 
-router = DefaultRouter()
-router.register(prefix="", viewset=viewsets.PhoneViewSet, basename="phone")
-router.register(prefix="card", viewset=viewsets.PhoneCardViewSet, basename="card")
 
 urlpatterns = [
     path("phones/", viewsets.PhoneViewSet.as_view({"get": "get_all"}), name="phone-list"),
     path("phone/<int:pk>/cards/", viewsets.PhoneCardViewSet.as_view({"get": "get_all"}), name="phone-cards-list"),
-    path("phone/", include(router.urls), name="phone")
+    path("phone/", include(routers.phone_router.urls), name="phone"),
+    path("brands/", viewsets.BrandViewSet.as_view({"get": "get_all"}), name="brand-list"),
+    path("brand/", include(routers.brand_router.urls), name="brands")
 ]

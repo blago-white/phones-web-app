@@ -22,8 +22,7 @@ class PhoneSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        fields = "__all__"
-        read_only_fields = ["id"]
+        fields = ["brand", "title"]
         model = phone.Phone
 
 
