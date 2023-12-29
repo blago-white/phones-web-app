@@ -1,6 +1,3 @@
-from rest_framework_simplejwt.authentication import JWTAuthentication
-from rest_framework.permissions import IsAuthenticatedOrReadOnly
-
 from phones import config, mixins
 from . import _base
 
@@ -20,5 +17,4 @@ class PhoneCardViewSet(mixins.BasePhoneCardViewSetMixin,
 class BrandViewSet(mixins.BaseBrandViewSetMixin,
                    _base.DefaultModelViewSet,
                    mixins.JWTAuthAPIView):
-    lookup_url_kwarg = "title"
-    lookup_field = "title"
+    lookup_url_kwarg = lookup_field = config.BRAND_PK_URL_FIELD

@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from phones.models import phone, base
-from phones.services.domain import brands as brands_services, phones as phones_services
+from phones.services.domain import brands as brands_services, \
+    phones as phones_services
 from rest_framework import serializers
 
 from phones.models import phone, base
@@ -42,11 +43,3 @@ class PhonePositionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = base.PhonePosition
-
-
-# class PhonePositionCreationSerializer(PhonePositionSerializer):
-#     price = serializers.IntegerField(max_value=32767)
-#
-#     class Meta:
-#         fields = "__all__"
-#         model = base.PhonePosition
