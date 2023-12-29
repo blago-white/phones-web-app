@@ -1,11 +1,11 @@
 from phones.serializers import phones as phones_serializers
 from phones.services.domain import phones
-from . import base
+from . import default
 
 __all__ = ("PhonesRepository", )
 
 
-class PhonesRepository(base.DefaultRepository):
+class PhonesRepository(default.DefaultRepository):
     _service = phones.PhoneService()
     _serializer = phones_serializers.PhoneSerializer
 

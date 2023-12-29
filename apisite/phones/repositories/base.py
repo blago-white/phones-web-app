@@ -4,8 +4,8 @@ from rest_framework import serializers
 
 from phones.services.domain import base
 
-_RequestPostData = dict[str, int | str]
-_PrimaryKey = int
+RequestPostData = dict[str, int | str]
+PrimaryKey = int
 
 
 class BaseRepository(metaclass=ABCMeta):
@@ -20,55 +20,61 @@ class BaseRepository(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def get_all(self) -> dict:
+    def get_all(self, *args, **kwargs) -> dict:
         pass
 
     @abstractmethod
-    def get(self, pk: _PrimaryKey) -> dict:
+    def get(self, *args, **kwargs) -> dict:
         pass
 
     @abstractmethod
-    def create(self, data: _RequestPostData) -> dict:
+    def create(self, *args, **kwargs) -> dict:
         pass
 
     @abstractmethod
-    def update(self, pk: _PrimaryKey, data: _RequestPostData):
+    def update(self, *args, **kwargs):
         pass
 
     @abstractmethod
-    def delete(self, pk: _PrimaryKey) -> None:
+    def delete(self, *args, **kwargs) -> None:
         pass
 
 
-class DefaultRepository(BaseRepository, metaclass=ABCMeta):
-    def get_all(self) -> dict:
-        objects = self._service.get_all()
-        serialized_objects = self._serializer(
-            instance=objects,
-            many=True
-        )
+class BaseModelRepository(BaseRepository, metaclass=ABCMeta):
+    @abstractmethod
+    def get(self, pk: PrimaryKey) -> dict:
+        pass
 
-        return serialized_objects.data
+    @abstractmethod
+    def create(self, data: RequestPostData) -> dict:
+        pass
 
-    def get(self, pk: _PrimaryKey) -> dict:
-        return self._serializer(instance=self._service.get(pk=pk)).data
+    @abstractmethod
+    def update(self, pk: PrimaryKey, data: RequestPostData):
+        pass
 
-    def create(self, data: _RequestPostData) -> dict:
-        serializer = self._serializer(data=data)
+    @abstractmethod
+    def delete(self, pk: PrimaryKey) -> None:
+        pass
 
-        serializer.is_valid(raise_exception=True)
 
-        self._service.create(data=serializer.validated_data)
+class BaseThroughModelRepository(BaseRepository, metaclass=ABCMeta):
+    @abstractmethod
+    def get_all(self, pk: PrimaryKey) -> dict:
+        pass
 
-        return serializer.data
+    @abstractmethod
+    def get(self, through_pk: PrimaryKey) -> dict:
+        pass
 
-    def update(self, pk: _PrimaryKey, data: _RequestPostData):
-        serializer = self._serializer(data=data, partial=True)
-        serializer.is_valid(raise_exception=True)
+    @abstractmethod
+    def create(self, data: RequestPostData, pk: PrimaryKey) -> dict:
+        pass
 
-        updated_instance = self._service.update(pk=pk, data=serializer.validated_data)
+    @abstractmethod
+    def update(self, through_pk: PrimaryKey, data: RequestPostData) -> None:
+        pass
 
-        return self._serializer(instance=updated_instance).data
-
-    def delete(self, pk: _PrimaryKey) -> None:
-        self._service.delete(pk=pk)
+    @abstractmethod
+    def delete(self, through_pk: PrimaryKey) -> None:
+        pass

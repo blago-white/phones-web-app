@@ -1,5 +1,4 @@
 from phones import serializers, repositories, config
-from . import base
 
 
 class BrandAPIViewMixin:

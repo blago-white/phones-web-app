@@ -1,4 +1,11 @@
 PHONE_PK_URL_FIELD = "pk"
+
+PHONE_POSITION_PK_URL_FIELD = "article_id"
+
 PHONES_LIMIT_QUERY_FIELD = "limit"
 
 BRAND_PK_URL_FIELD = "title"
+
+COLOR_QUERY_KWARG = "color"
+
+STORAGE_QUERY_KWARG = "storage"

@@ -1,6 +1,6 @@
 from typing import Callable
 
-from django.http import request
+from django.http import request, HttpResponseRedirect
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
@@ -49,5 +49,16 @@ class CreateAPIViewMixin(ModelAPIViewMixin, POSTAPIViewMixin):
         )
 
 
-class APIViewSetMixin(CreateAPIViewMixin, RetrieveAPIViewMixin):
+class RedirectViewMixin(ModelAPIViewMixin, POSTAPIViewMixin):
+    request: request.HttpRequest
+
+    @staticmethod
+    def get_303_response(url: str) -> HttpResponseRedirect:
+        return HttpResponseRedirect(
+            redirect_to=url,
+            status=status.HTTP_303_SEE_OTHER
+        )
+
+
+class APIViewSetMixin(CreateAPIViewMixin, RetrieveAPIViewMixin, RedirectViewMixin):
     pass

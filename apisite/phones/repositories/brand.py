@@ -1,12 +1,10 @@
-from phones.services.domain.brands import BrandService
 from phones.serializers.brands import BrandSerializer
-
-from . import base
-
+from phones.services.domain.brands import BrandService
+from . import default
 
 __all__ = ["BrandRepository"]
 
 
-class BrandRepository(base.DefaultRepository):
+class BrandRepository(default.DefaultRepository):
     _service = BrandService()
     _serializer = BrandSerializer
