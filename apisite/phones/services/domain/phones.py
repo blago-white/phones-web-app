@@ -22,7 +22,6 @@ class PhonePositionService(BaseModelService):
     _model: base.PhonePosition = base.PhonePosition
 
     def get_related(self, phone_id: int) -> models.QuerySet:
-        print(phone_id, self._model.objects.all().values())
         return self._model.objects.filter(phone_id=phone_id)
 
     def get_default_instance_options(self, phone_id: int) -> models.QuerySet:

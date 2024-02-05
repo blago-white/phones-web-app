@@ -37,7 +37,7 @@ class PhoneSerializer(serializers.ModelSerializer):
 
 
 class PhonePositionSerializer(serializers.ModelSerializer):
-    phone = _PhonePrimaryKeyRelatedField()
+    phone = _PhonePrimaryKeyRelatedField(required=False)
     price = serializers.IntegerField(max_value=32767)
 
     class Meta:
