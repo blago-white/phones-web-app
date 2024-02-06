@@ -1,3 +1,7 @@
-from django.shortcuts import render
+from rest_framework.generics import CreateAPIView
+from common.mixins import PostOnlyAPIViewMixin
 
-# Create your views here.
+
+class UserRegistrationApiView(PostOnlyAPIViewMixin, CreateAPIView):
+    def post(self, request, *args, **kwargs):
+        pass

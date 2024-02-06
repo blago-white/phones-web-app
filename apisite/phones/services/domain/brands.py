@@ -1,5 +1,5 @@
 from phones.models import brands
-from .base import BaseModelService
+from common.services.base import BaseModelService
 
 
 class BrandService(BaseModelService):

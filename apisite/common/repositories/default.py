@@ -1,8 +1,8 @@
 from abc import ABCMeta
 
-from phones.services.domain import base
-from .base import (BaseModelRepository, BaseThroughModelRepository,
-                   PrimaryKey, RequestPostData)
+from common.services import base
+from common.repositories.base import (BaseModelRepository, BaseThroughModelRepository,
+                                      PrimaryKey, RequestPostData)
 
 
 class DefaultRepository(BaseModelRepository, metaclass=ABCMeta):

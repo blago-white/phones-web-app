@@ -1,10 +1,8 @@
 from phones.serializers import phones as phones_serializers
 from phones.services.domain import phones
-from . import default
+from common.repositories import default
 
 __all__ = ("PhonesRepository", )
-
-from .base import RequestPostData
 
 
 class PhonesRepository(default.DefaultRepository):

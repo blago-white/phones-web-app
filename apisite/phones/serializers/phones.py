@@ -42,8 +42,6 @@ class CurrentUserDefault:
 
 
 class PhoneSerializer(serializers.ModelSerializer):
-    id = serializers.HiddenField(default=None)
-
     seller = serializers.HiddenField(default=CurrentUserDefault())
 
     brand = _BrandPrimaryKeyRelatedField(
@@ -64,17 +62,3 @@ class PhonePositionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = base.PhonePosition
-# '_kwargs': {'default': <phones.serializers.phones.CurrentUserDefault object at 0x0000013CC09A7350>},
-# '_creation_counter': 10,
-# 'read_only': False,
-# 'write_only': True,
-# 'required': False,
-# 'default': <phones.serializers.phones.CurrentUserDefault object at 0x0000013CC09A7350>,
-# 'source': 'seller',
-# 'initial': None,
-# 'label': 'Seller',
-# 'help_text': None,
-# 'style': {},
-# 'allow_null': False,
-# 'field_name': 'seller',
-# 'parent': PhoneSerializer(data={'title': 'iphone 15 pro max', 'brand': 'apple', 'seller': 1}):

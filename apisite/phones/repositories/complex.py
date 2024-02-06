@@ -1,8 +1,7 @@
 from phones import serializers
 from phones.services.domain import phones
 from phones.utils.options import CardOptions
-from . import base
-from . import default
+from common.repositories import base, default
 
 __all__ = ("PhonesCardRepository",)
 

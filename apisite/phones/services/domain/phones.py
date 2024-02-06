@@ -3,7 +3,7 @@ from rest_framework.exceptions import APIException
 
 from phones.models import base, phone
 from phones.utils.options import CardOptions
-from .base import BaseModelService
+from common.services.base import BaseModelService
 
 
 class PhoneService(BaseModelService):

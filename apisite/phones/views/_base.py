@@ -2,7 +2,7 @@ from django.http import HttpRequest
 from rest_framework.viewsets import ModelViewSet
 
 from phones.mixins import base
-from phones.repositories.base import BaseThroughModelRepository
+from common.repositories.base import BaseThroughModelRepository
 
 
 class DefaultModelViewSet(base.APIViewSetMixin,
