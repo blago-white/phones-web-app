@@ -4,6 +4,8 @@ from . import default
 
 __all__ = ("PhonesRepository", )
 
+from .base import RequestPostData
+
 
 class PhonesRepository(default.DefaultRepository):
     _service = phones.PhoneService()

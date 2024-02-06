@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 
 from . import brands, colors, storages, base
 
@@ -15,6 +16,10 @@ class Phone(models.Model):
     storages = models.ManyToManyField(to=storages.PhoneStorage,
                                       related_name="storages",
                                       through=base.PhonePosition)
+
+    seller = models.ForeignKey(to=get_user_model(),
+                               on_delete=models.CASCADE,
+                               related_name="products")
 
     def __str__(self):
         return f"{self.brand} {self.title.capitalize()}"

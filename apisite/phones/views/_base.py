@@ -19,6 +19,7 @@ class DefaultModelViewSet(base.APIViewSetMixin,
 
     def create(self, request: HttpRequest, **kwargs):
         request_data = self.get_request_data()
+        print(request_data)
         return self.get_201_response(
             data=self._repository.create(data=request_data)
         )

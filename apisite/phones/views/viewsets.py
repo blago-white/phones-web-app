@@ -2,7 +2,7 @@ from common import celery
 
 from phones import config, mixins
 from jwt_auth.mixins import jwt
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 
 from . import _base
 

@@ -1,6 +1,9 @@
-from django.http import request
+from django.http.request import HttpRequest
+from django.http.request import QueryDict
 
 from phones import serializers, config, repositories
+from users import config as users_config
+
 from . import base
 
 
@@ -11,7 +14,7 @@ class PhonesAPIViewMixin(base.ModelAPIViewMixin):
 
 
 class PhonesListAPIViewMixin(PhonesAPIViewMixin):
-    request: request.HttpRequest
+    request: HttpRequest
 
     def get_all(self, *args, **kwargs):
         return self.get_200_response(
@@ -29,5 +32,17 @@ class PhonesListAPIViewMixin(PhonesAPIViewMixin):
         return limit
 
 
-class BasePhoneViewSetMixin(PhonesListAPIViewMixin):
+class PhonesCreateApiView(PhonesAPIViewMixin):
+    def get_request_data(self) -> dict:
+        request_copy = self.request.POST.copy()
+
+        request_copy.setdefault(
+            key=users_config.DEFAULT_SERIALIZER_SELLER_FIELD_NAME,
+            default=self.request.user
+        )
+
+        return request_copy
+
+
+class BasePhoneViewSetMixin(PhonesListAPIViewMixin, PhonesCreateApiView):
     pass
