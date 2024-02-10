@@ -1,25 +1,24 @@
-from common import celery
+from django.http import HttpRequest
 
 from phones import config, mixins
 from jwt_auth.mixins import jwt
-from django.http import HttpResponse, HttpRequest
 
-from . import _base
+from common.viewsets import base
 
 
 class PhoneViewSet(mixins.BasePhoneViewSetMixin,
                    jwt.JWTAuthAPIViewMixin,
-                   _base.DefaultModelViewSet):
+                   base.DefaultModelViewSet):
     pass
 
 
 class PhoneCardViewSet(mixins.BasePhoneCardViewSetMixin,
                        jwt.JWTAuthAPIViewMixin,
-                       _base.DefaultTroughModelViewSet):
+                       base.DefaultTroughModelViewSet):
     trough_pk_url_kwarg = config.PHONE_POSITION_PK_URL_FIELD
 
 
 class BrandViewSet(mixins.BaseBrandViewSetMixin,
                    jwt.JWTAuthAPIViewMixin,
-                   _base.DefaultModelViewSet):
+                   base.DefaultModelViewSet):
     lookup_url_kwarg = lookup_field = config.BRAND_PK_URL_FIELD

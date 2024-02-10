@@ -16,7 +16,6 @@ class Phone(models.Model):
     storages = models.ManyToManyField(to=storages.PhoneStorage,
                                       related_name="storages",
                                       through=base.PhonePosition)
-
     seller = models.ForeignKey(to=get_user_model(),
                                on_delete=models.CASCADE,
                                related_name="products")

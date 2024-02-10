@@ -6,6 +6,6 @@ def save_validated(instance: models.Model) -> models.Model:
     instance.full_clean()
     instance.save()
 
-    test_sleep_task.delay()
+    # test_sleep_task.delay()
 
     return instance

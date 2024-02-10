@@ -1,13 +1,15 @@
 from django.http.request import HttpRequest
-from django.http.request import QueryDict
 
 from phones import serializers, config, repositories
+
 from users import config as users_config
 
-from . import base
+from common.mixins import api
+
+from .authority import CheckAuthorityViewSetMixin
 
 
-class PhonesAPIViewMixin(base.ModelAPIViewMixin):
+class PhonesAPIViewMixin(api.ModelAPIViewMixin):
     serializer_class = serializers.PhoneSerializer
     pk_url_kwarg = config.PHONE_PK_URL_FIELD
     _repository: repositories.PhonesRepository = repositories.PhonesRepository()
@@ -32,17 +34,19 @@ class PhonesListAPIViewMixin(PhonesAPIViewMixin):
         return limit
 
 
-class PhonesCreateApiView(PhonesAPIViewMixin):
+class PhonesCreateApiViewMixin(PhonesAPIViewMixin):
     def get_request_data(self) -> dict:
         request_copy = self.request.POST.copy()
 
         request_copy.setdefault(
             key=users_config.DEFAULT_SERIALIZER_SELLER_FIELD_NAME,
-            default=self.request.user
+            default=self.request.user.pk
         )
 
         return request_copy
 
 
-class BasePhoneViewSetMixin(PhonesListAPIViewMixin, PhonesCreateApiView):
-    pass
+class BasePhoneViewSetMixin(CheckAuthorityViewSetMixin,
+                            PhonesListAPIViewMixin,
+                            PhonesCreateApiViewMixin):
+    product_pk_url_kwarg = config.PHONE_PK_URL_FIELD

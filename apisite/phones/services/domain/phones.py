@@ -17,6 +17,18 @@ class PhoneService(BaseModelService):
 
         return queryset
 
+    def update(self, pk, data) -> models.Model:
+        try:
+            instances = self._model.objects.filter(pk=pk)
+            instance = instances.first()
+
+            instances.update(**data)
+
+        except ValidationError:
+            raise ValidationError("Object does not exists or data for update is not correct")
+
+        return instance
+
 
 class PhonePositionService(BaseModelService):
     _model: base.PhonePosition = base.PhonePosition

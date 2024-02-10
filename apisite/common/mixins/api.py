@@ -31,7 +31,6 @@ class ModelAPIViewMixin(BaseResponseAPIViewMixin):
 
 class POSTAPIViewMixin(BaseResponseAPIViewMixin):
     def get_request_data(self) -> dict:
-        print("Hello")
         return self.request.POST
 
 
