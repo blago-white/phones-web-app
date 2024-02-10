@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.serializers import ModelSerializer
 
-from phones.repositories.base import BaseRepository
+from common.repositories.base import BaseRepository
 
 
 class BaseResponseAPIViewMixin:

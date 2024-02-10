@@ -1,17 +1,22 @@
-from django.http import request
+from django.http.request import HttpRequest
 
 from phones import serializers, config, repositories
-from . import base
+
+from users import config as users_config
+
+from common.mixins import api
+
+from .authority import CheckAuthorityViewSetMixin
 
 
-class PhonesAPIViewMixin(base.ModelAPIViewMixin):
+class PhonesAPIViewMixin(api.ModelAPIViewMixin):
     serializer_class = serializers.PhoneSerializer
     pk_url_kwarg = config.PHONE_PK_URL_FIELD
     _repository: repositories.PhonesRepository = repositories.PhonesRepository()
 
 
 class PhonesListAPIViewMixin(PhonesAPIViewMixin):
-    request: request.HttpRequest
+    request: HttpRequest
 
     def get_all(self, *args, **kwargs):
         return self.get_200_response(
@@ -29,5 +34,19 @@ class PhonesListAPIViewMixin(PhonesAPIViewMixin):
         return limit
 
 
-class BasePhoneViewSetMixin(PhonesListAPIViewMixin):
-    pass
+class PhonesCreateApiViewMixin(PhonesAPIViewMixin):
+    def get_request_data(self) -> dict:
+        request_copy = self.request.POST.copy()
+
+        request_copy.setdefault(
+            key=users_config.DEFAULT_SERIALIZER_SELLER_FIELD_NAME,
+            default=self.request.user.pk
+        )
+
+        return request_copy
+
+
+class BasePhoneViewSetMixin(CheckAuthorityViewSetMixin,
+                            PhonesListAPIViewMixin,
+                            PhonesCreateApiViewMixin):
+    product_pk_url_kwarg = config.PHONE_PK_URL_FIELD

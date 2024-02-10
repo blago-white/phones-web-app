@@ -3,7 +3,7 @@ from rest_framework.exceptions import APIException
 
 from phones.models import base, phone
 from phones.utils.options import CardOptions
-from .base import BaseModelService
+from common.services.base import BaseModelService
 
 
 class PhoneService(BaseModelService):
@@ -17,12 +17,23 @@ class PhoneService(BaseModelService):
 
         return queryset
 
+    def update(self, pk, data) -> models.Model:
+        try:
+            instances = self._model.objects.filter(pk=pk)
+            instance = instances.first()
+
+            instances.update(**data)
+
+        except ValidationError:
+            raise ValidationError("Object does not exists or data for update is not correct")
+
+        return instance
+
 
 class PhonePositionService(BaseModelService):
     _model: base.PhonePosition = base.PhonePosition
 
     def get_related(self, phone_id: int) -> models.QuerySet:
-        print(phone_id, self._model.objects.all().values())
         return self._model.objects.filter(phone_id=phone_id)
 
     def get_default_instance_options(self, phone_id: int) -> models.QuerySet:

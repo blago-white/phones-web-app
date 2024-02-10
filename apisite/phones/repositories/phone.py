@@ -1,11 +1,16 @@
+from rest_framework.exceptions import PermissionDenied
+
+from common.repositories.base import PrimaryKey, RequestPostData
+from common.repositories import default
+
 from phones.serializers import phones as phones_serializers
 from phones.services.domain import phones
-from . import default
+from phones.repositories.default import DefaultAuthorityModelRepository
 
 __all__ = ("PhonesRepository", )
 
 
-class PhonesRepository(default.DefaultRepository):
+class PhonesRepository(DefaultAuthorityModelRepository):
     _service = phones.PhoneService()
     _serializer = phones_serializers.PhoneSerializer
 

@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 
 from rest_framework import serializers
 
-from phones.services.domain import base
+from common.services import base
 
 RequestPostData = dict[str, int | str]
 PrimaryKey = int

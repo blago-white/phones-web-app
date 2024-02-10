@@ -1,6 +1,6 @@
 from phones.serializers.brands import BrandSerializer
 from phones.services.domain.brands import BrandService
-from . import default
+from common.repositories import default
 
 __all__ = ["BrandRepository"]
 

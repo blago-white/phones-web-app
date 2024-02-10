@@ -7,6 +7,9 @@ from common.models import utils
 
 
 class AbstractModelService(metaclass=ABCMeta):
+    def __init__(self, model: models.Model = None):
+        self._model = model if model is not None else self._model
+
     @property
     @abstractmethod
     def _model(self) -> models.Model:

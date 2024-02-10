@@ -1,11 +1,11 @@
 from django.http import HttpRequest
 from rest_framework.viewsets import ModelViewSet
 
-from phones.mixins import base
-from phones.repositories.base import BaseThroughModelRepository
+from common.mixins import api
+from common.repositories.base import BaseThroughModelRepository
 
 
-class DefaultModelViewSet(base.APIViewSetMixin,
+class DefaultModelViewSet(api.APIViewSetMixin,
                           ModelViewSet):
     def get_all(self, request: HttpRequest):
         return self.get_200_response(data=self._repository.get_all())
@@ -19,6 +19,9 @@ class DefaultModelViewSet(base.APIViewSetMixin,
 
     def create(self, request: HttpRequest, **kwargs):
         request_data = self.get_request_data()
+
+        print(request_data)
+
         return self.get_201_response(
             data=self._repository.create(data=request_data)
         )
@@ -35,7 +38,7 @@ class DefaultModelViewSet(base.APIViewSetMixin,
         )
 
 
-class DefaultTroughModelViewSet(base.APIViewSetMixin,
+class DefaultTroughModelViewSet(api.APIViewSetMixin,
                                 ModelViewSet):
     trough_pk_url_kwarg: str
     _repository: BaseThroughModelRepository
@@ -54,6 +57,7 @@ class DefaultTroughModelViewSet(base.APIViewSetMixin,
 
     def create(self, request: HttpRequest, **kwargs):
         request_data = self.get_request_data()
+
         return self.get_201_response(
             data=self._repository.create(data=request_data, pk=self.get_requested_pk())
         )
