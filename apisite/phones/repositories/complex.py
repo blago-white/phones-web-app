@@ -23,7 +23,7 @@ class PhonesCardRepository(DefaultAuthorityThroughtModelRepository):
 
         return serializer.data
 
-    def get_all_for_pk(self, pk: int) -> dict:
+    def get_related(self, pk: int) -> dict:
         return self._serializer(
             self._service.get_related(phone_id=pk),
             many=True

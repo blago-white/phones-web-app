@@ -48,6 +48,13 @@ class DefaultTroughModelViewSet(api.APIViewSetMixin,
 
         return self.get_200_response(data=self._repository.get_all(pk=object_pk))
 
+    def get_related(self, *args, **kwargs):
+        object_pk = self.get_requested_pk()
+
+        return self.get_200_response(
+            data=self._repository.get_related(pk=object_pk)
+        )
+
     def retrieve(self, request: HttpRequest, *args, **kwargs):
         through_pk = self.get_trough_pk()
 

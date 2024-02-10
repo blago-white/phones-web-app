@@ -64,6 +64,10 @@ class BaseThroughModelRepository(BaseRepository, metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def get_related(self, pk: PrimaryKey) -> dict:
+        pass
+
+    @abstractmethod
     def get(self, through_pk: PrimaryKey) -> dict:
         pass
 
