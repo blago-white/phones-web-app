@@ -27,7 +27,7 @@ class DefaultRepository(BaseModelRepository, metaclass=ABCMeta):
 
         serializer.is_valid(raise_exception=True)
 
-        self._service.create(data=serializer.validated_data)
+        self._service.create(data=serializer.data)
 
         return serializer.data
 
@@ -65,7 +65,7 @@ class DefaultThroughtModelRepository(BaseThroughModelRepository, metaclass=ABCMe
 
         serializer.is_valid(raise_exception=True)
 
-        self._service.create(data=serializer.validated_data)
+        self._service.create(data=serializer.data)
 
         return serializer.data
 
