@@ -1,4 +1,5 @@
 from abc import ABCMeta
+from rest_framework.serializers import ModelSerializer
 
 from common.services import base
 from common.repositories.base import (BaseModelRepository, BaseThroughModelRepository,
@@ -27,7 +28,9 @@ class DefaultRepository(BaseModelRepository, metaclass=ABCMeta):
 
         serializer.is_valid(raise_exception=True)
 
-        self._service.create(data=serializer.data)
+        serializer = self._serializer(
+            instance=self._service.create(data=serializer.validated_data)
+        )
 
         return serializer.data
 
@@ -61,11 +64,11 @@ class DefaultThroughtModelRepository(BaseThroughModelRepository, metaclass=ABCMe
         return self._serializer(instance=self._service.get(pk=through_pk)).data
 
     def create(self, data: RequestPostData, pk: PrimaryKey) -> dict:
-        serializer = self._serializer(data=data)
+        serializer: ModelSerializer = self._serializer(data=data)
 
         serializer.is_valid(raise_exception=True)
 
-        self._service.create(data=serializer.data)
+        self._service.create(data=serializer.validated_data)
 
         return serializer.data
 

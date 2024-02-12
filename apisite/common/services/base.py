@@ -44,7 +44,7 @@ class BaseModelService(AbstractModelService, metaclass=ABCMeta):
         return self._model.objects.get(pk=pk)
 
     def create(self, data) -> models.Model:
-        instance: models.Model = self._model(**data)
+        instance: models.Model = self._model.objects.create(**data)
 
         return utils.save_validated(instance=instance)
 

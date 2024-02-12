@@ -49,6 +49,15 @@ class PhoneSerializer(serializers.ModelSerializer):
         read_only_fields = ["id", DEFAULT_SERIALIZER_SELLER_FIELD_NAME]
         model = phone.Phone
 
+    @property
+    def validated_data(self):
+        validated_data = self._validated_data.copy()
+        validated_data.setdefault("seller_id",
+                                  self.initial_data.get("seller_id")
+                                  )
+
+        return validated_data
+
 
 class PhonePositionSerializer(serializers.ModelSerializer):
     phone = _PhonePrimaryKeyRelatedField(required=False)
@@ -57,3 +66,13 @@ class PhonePositionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = base.PhonePosition
+
+
+
+
+
+# Как будет складываться моя прибыль
+# Как будет происходить выигрыш у игроков и как выводится
+# Минимальный % моего выигрыша с сайта
+# Как подключить ботов , что бы люди сразу забирали свой выигрыш
+# Просчитать Шансы на выпадения
